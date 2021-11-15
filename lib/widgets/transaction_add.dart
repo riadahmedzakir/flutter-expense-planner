@@ -3,9 +3,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class TransactionAdd extends StatelessWidget {
-  late String title;
-  late String amount;
+class TransactionAdd extends StatefulWidget {
+  final Function addTransaction;
+
+  TransactionAdd(this.addTransaction);
+
+  @override
+  _TransactionAddState createState() => _TransactionAddState(addTransaction);
+}
+
+class _TransactionAddState extends State<TransactionAdd> {
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+
+  final Function addTransaction;
+
+  _TransactionAddState(this.addTransaction);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,20 +31,24 @@ class TransactionAdd extends StatelessWidget {
               children: <Widget>[
                 TextField(
                   decoration: InputDecoration(labelText: 'Title'),
-                  onChanged: (val) {
-                    title = val;
-                  },
+                  controller: _titleController,
                 ),
                 TextField(
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(labelText: 'Amount'),
-                  onChanged: (val) {
-                    amount = val;
-                  },
+                  controller: _amountController,
                 ),
                 FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                            if (_titleController.text != '' &&
+                                _amountController.text != '') {
+                              addTransaction(_titleController.text,
+                                  double.parse(_amountController.text));
+                              _titleController.clear();
+                              _amountController.clear();
+                            }
+                          },
                     textColor: Colors.purple,
                     child: Text('Add transaction'))
               ]),

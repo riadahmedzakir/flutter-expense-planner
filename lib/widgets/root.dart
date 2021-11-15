@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_expense_planner/widgets/transaction_add.dart';
 import 'package:flutter_expense_planner/widgets/transaction_chart.dart';
 import 'package:flutter_expense_planner/widgets/transaction_list.dart';
 
@@ -16,11 +15,7 @@ class Root extends StatelessWidget {
           appBar: AppBar(title: const Text('Expense planner')),
           body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                TransactionChart(),
-                TransactionAdd(),
-                TransactionList()
-              ])),
+              children: <Widget>[TransactionChart(), TransactionList()])),
     );
   }
 }
