@@ -20,7 +20,7 @@ class TransactionChart extends StatelessWidget {
       }
 
       return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
-    });
+    }).reversed.toList();
   }
 
   double get maxSpending {
@@ -34,25 +34,35 @@ class TransactionChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      margin: EdgeInsets.all(20),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((data) {
-            return Flexible(
-              fit: FlexFit.tight,
-              child: TransactionChartBar(
-                data['day'] as String,
-                data['amount'] as double,
-                maxSpending == 0.0
-                    ? 0.0
-                    : (data['amount'] as double) / maxSpending,
-              ),
-            );
-          }).toList(),
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape
+            ? true
+            : false;
+
+    return Container(
+      height: isLandscape
+          ? MediaQuery.of(context).size.height * 0.43
+          : MediaQuery.of(context).size.height * 0.22,
+      child: Card(
+        elevation: 6,
+        margin: EdgeInsets.all(20),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues.map((data) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: TransactionChartBar(
+                  data['day'] as String,
+                  data['amount'] as double,
+                  maxSpending == 0.0
+                      ? 0.0
+                      : (data['amount'] as double) / maxSpending,
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

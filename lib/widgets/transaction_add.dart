@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class TransactionAdd extends StatefulWidget {
   final Function addTransaction;
@@ -15,11 +16,14 @@ class TransactionAdd extends StatefulWidget {
 class _TransactionAddState extends State<TransactionAdd> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
+  DateTime? _selectedDate;
 
-  void onSubmit() {
-    if (_titleController.text != '' && _amountController.text != '') {
-      widget.addTransaction(
-          _titleController.text, double.parse(_amountController.text));
+  void _onSubmit() {
+    if (_titleController.text != '' &&
+        _amountController.text != '' &&
+        _selectedDate != null) {
+      widget.addTransaction(_titleController.text,
+          double.parse(_amountController.text), _selectedDate);
       _titleController.clear();
       _amountController.clear();
 
@@ -27,12 +31,35 @@ class _TransactionAddState extends State<TransactionAdd> {
     }
   }
 
+  void _showDatePicker(context) {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021),
+            lastDate: DateTime.now())
+        .then((pickedData) {
+      if (pickedData == null) {
+        return;
+      }
+
+      setState(() {
+        _selectedDate = pickedData;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SingleChildScrollView(
+      child: Card(
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
@@ -46,11 +73,33 @@ class _TransactionAddState extends State<TransactionAdd> {
                   decoration: InputDecoration(labelText: 'Amount'),
                   controller: _amountController,
                 ),
-                FlatButton(
-                    onPressed: onSubmit,
-                    textColor: Colors.purple,
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: Text(_selectedDate == null
+                            ? 'No selected date'
+                            : 'Picked Date : ${DateFormat.yMd().format(_selectedDate!)}')),
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Chose Date',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () => _showDatePicker(context),
+                    )
+                  ],
+                ),
+                RaisedButton(
+                    onPressed: _onSubmit,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
                     child: Text('Add transaction'))
               ]),
-        ));
+        ),
+      ),
+    );
   }
 }

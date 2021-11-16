@@ -20,15 +20,21 @@ class _HomeState extends State<Home> {
     return x.toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime date) {
     final newTransaction = Transaction(
         title: title,
         amount: amount,
-        date: DateTime.now(),
+        date: date,
         id: DateTime.now().toString());
 
     setState(() {
       _transactions.add(newTransaction);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -55,7 +61,7 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               TransactionChart(_recentTranasctions!),
-              TransactionList(_transactions, _addNewTransaction)
+              TransactionList(_transactions, _addNewTransaction, _deleteTransaction)
             ]),
       ),
       floatingActionButton: FloatingActionButton(
