@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expense_planner/widgets/transaction.dart';
+import 'package:flutter_expense_planner/models/transaction.dart';
 import 'package:flutter_expense_planner/widgets/transaction_add.dart';
 import 'package:flutter_expense_planner/widgets/transaction_chart.dart';
 import 'package:flutter_expense_planner/widgets/transaction_list.dart';
@@ -11,10 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final List<Transaction> _transactions = [
-    Transaction(
-        id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'Katana', amount: 200.99, date: DateTime.now()),
+    
   ];
 
   void _addNewTransaction(String title, double amount) {

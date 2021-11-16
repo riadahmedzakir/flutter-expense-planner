@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expense_planner/widgets/transaction.dart';
+import 'package:flutter_expense_planner/models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionCard extends StatelessWidget {
@@ -15,14 +15,15 @@ class TransactionCard extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           padding: const EdgeInsets.all(10),
-          decoration:
-              BoxDecoration(border: Border.all(color: Colors.purple, width: 1)),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: Theme.of(context).primaryColorDark, width: 1)),
           child: Text(
             '\$ ${tx.amount.toString()}',
-            style: const TextStyle(
+            style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: Colors.purple),
+                color: Theme.of(context).primaryColorDark),
           ),
         ),
         Column(
