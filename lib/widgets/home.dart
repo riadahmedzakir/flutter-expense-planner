@@ -10,9 +10,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<Transaction> _transactions = [
-    
-  ];
+  final List<Transaction> _transactions = [];
+
+  List<Transaction>? get _recentTranasctions {
+    var x = _transactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    });
+
+    return x.toList();
+  }
 
   void _addNewTransaction(String title, double amount) {
     final newTransaction = Transaction(
@@ -48,7 +54,7 @@ class _HomeState extends State<Home> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              TransactionChart(),
+              TransactionChart(_recentTranasctions!),
               TransactionList(_transactions, _addNewTransaction)
             ]),
       ),

@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_planner/models/transaction.dart';
-import 'package:flutter_expense_planner/widgets/transaction_add.dart';
 import 'package:flutter_expense_planner/widgets/transaction_card.dart';
 
 class TransactionList extends StatefulWidget {
@@ -18,7 +19,7 @@ class _TransactionListState extends State<TransactionList> {
   Widget build(BuildContext context) {
     return widget._transactions.isEmpty
         ? Container(
-            height: 600,
+            height: 500,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
