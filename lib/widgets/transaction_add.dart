@@ -9,16 +9,23 @@ class TransactionAdd extends StatefulWidget {
   TransactionAdd(this.addTransaction);
 
   @override
-  _TransactionAddState createState() => _TransactionAddState(addTransaction);
+  _TransactionAddState createState() => _TransactionAddState();
 }
 
 class _TransactionAddState extends State<TransactionAdd> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
 
-  final Function addTransaction;
+  void onSubmit() {
+    if (_titleController.text != '' && _amountController.text != '') {
+      widget.addTransaction(
+          _titleController.text, double.parse(_amountController.text));
+      _titleController.clear();
+      _amountController.clear();
 
-  _TransactionAddState(this.addTransaction);
+      Navigator.of(context).pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +47,7 @@ class _TransactionAddState extends State<TransactionAdd> {
                   controller: _amountController,
                 ),
                 FlatButton(
-                    onPressed: () {
-                            if (_titleController.text != '' &&
-                                _amountController.text != '') {
-                              addTransaction(_titleController.text,
-                                  double.parse(_amountController.text));
-                              _titleController.clear();
-                              _amountController.clear();
-                            }
-                          },
+                    onPressed: onSubmit,
                     textColor: Colors.purple,
                     child: Text('Add transaction'))
               ]),

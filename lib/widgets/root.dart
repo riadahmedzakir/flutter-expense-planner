@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_expense_planner/widgets/transaction_chart.dart';
-import 'package:flutter_expense_planner/widgets/transaction_list.dart';
+import 'package:flutter_expense_planner/widgets/home.dart';
 
 class Root extends StatelessWidget {
   @override
@@ -11,11 +9,7 @@ class Root extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-          appBar: AppBar(title: const Text('Expense planner')),
-          body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[TransactionChart(), TransactionList()])),
+      home: Home(),
     );
   }
 }
